@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Meu Site Django{% endblock %}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+            line-height: 1.6;
+        }
+
+        .top-bar nav {
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .top-bar nav a {
+            margin-right: 12px;
+            text-decoration: none;
+            color: #0056b3;
+        }
+
+        .top-bar nav a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 32px;
+            padding-top: 12px;
+            border-top: 1px solid #ddd;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    {% include "partials/top_bar.html" %}
+
+    {% block content %}{% endblock %}
+
+    {% include "partials/footer.html" %}
+</body>
+</html>
