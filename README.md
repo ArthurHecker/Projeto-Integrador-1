@@ -7,42 +7,12 @@ Emmanuel, Fábio, Firmo, Arthur
 Front-end:
 Matheus, Bianca, William, Irving
 
-## Arquitetura inicial (simples)
+## Arquitetura inicial 
 
-Este projeto foi organizado para iniciantes em Django, com apenas o essencial:
-
-- `core/`: configurações principais do projeto (settings, urls, wsgi, asgi)
+- `core/`: configurações principais do projeto (settings, urls, wsgi, asgi) > NÃO USAREMOS POR AGORA
 - `siteapp/`: app com as páginas e rotas do site
 - `templates/`: HTML base e páginas
-- `manage.py`: comando principal do Django
-
-Estrutura:
-
-```text
-Projeto-Integrador-1/
-├── core/
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── siteapp/
-│   ├── __init__.py
-│   ├── apps.py
-│   ├── urls.py
-│   └── views.py
-├── templates/
-│   ├── base.html
-│   └── siteapp/
-│       ├── contato.html
-│       ├── home.html
-│       ├── servicos.html
-│       └── sobre.html
-├── .gitignore
-├── manage.py
-├── requirements.txt
-└── README.md
-```
+- `manage.py`: comando principal do Django > NÃO USAREMOS POR AGORA
 
 ## Rotas de exemplo
 
@@ -53,14 +23,25 @@ Projeto-Integrador-1/
 
 ## Como executar
 
-1. Ative e crie o ambiente virtual:
+1. Entre na sua branch:
 
+Atualizar com as alterações das branchs*
 ```bash
-python -m venv venv
+git fetch
+```
+- Se for Emmanuel:
+```bash
+git checkout emmanuel
 ```
 
+- Se for Fabio:
 ```bash
-source venv/bin/activate
+git checkout fabio
+```
+
+- Se for Firmo:
+```bash
+git checkout firmo
 ```
 
 2. Instale as dependências:
@@ -70,10 +51,6 @@ pip install -r requirements.txt
 ```
 
 3. Aplique migrações iniciais:
-
-```bash
-python manage.py migrate
-```
 
 4. Rode o servidor:
 
@@ -86,4 +63,22 @@ python manage.py runserver
 ```text
 http://127.0.0.1:8000/
 ```
+6. Aplicar as alterações no sistema
 
+
+- Indicar ao git todos os arquivos alterados no sistema
+
+```bash
+git add .
+```
+
+- Aplicando todos os arquivos alterados para o github com uma mensagem de identificação
+
+```bash
+git commit -m "(Mensagem informando a alteração feita)"
+```
+
+- Enviando todas as alterações para os serviços do github
+```bash
+git push
+```
