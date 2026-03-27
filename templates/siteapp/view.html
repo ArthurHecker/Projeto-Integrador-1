@@ -1,0 +1,12 @@
+<h1>Detalhes do Evento</h1>
+
+{% if evento %}
+    <h2>{{ evento.nome }}</h2>
+    <p>Data: {{ evento.data }}</p>
+
+    <h3>Presenças (Em Breve)</h3>
+    <p>Nome dos pais presentes</p>
+{% else %}
+    <p>Evento não encontrado!</p>
+{% endif %}
+

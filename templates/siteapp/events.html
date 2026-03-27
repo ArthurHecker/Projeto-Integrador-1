@@ -1,0 +1,21 @@
+<h1>Criar Evento</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="nome" placeholder="Nome da reunião" required>
+    <input type="date" name="data" required>
+    <button type="submit">Criar</button>
+</form>
+
+<hr>
+
+<h2>Eventos Criados</h2>
+
+{% for evento in events %}
+    <div style="border:1px solid #000; margin:10px; padding:10px;">
+        <h3>{{ evento.nome }}</h3>
+        <p>{{ evento.data }}</p>
+    
+        <a href="{% url 'view_event' evento.id %}">Ver Presenças</a>
+    </div>
+{% endfor %}
