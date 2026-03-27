@@ -20,12 +20,12 @@ def events(request):
         EVENTS.append(evento)
 
         return redirect('events')
-    return render(request, 'events.html',{'events': EVENTS})
+    return render(request, 'siteapp/events.html',{'events': EVENTS})
 
 def view_event(request, event_id):
     evento = next((e for e in EVENTS if e['id'] == event_id), None)
 
-    return render(request, 'view.html', {'evento': evento})
+    return render(request, 'siteapp/view.html', {'evento': evento})
 
 def contato(request):
     return render(request, "siteapp/contato.html")
