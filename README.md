@@ -21,6 +21,47 @@ Matheus, Bianca, William, Irving
 - `/servicos/` -> Página Serviços
 - `/contato/` -> Página Contato
 
+## Banco de dados base (Parents e Attendances)
+
+Foi criada uma base inicial em `siteapp/models.py` para orientar o time:
+
+- `Parent`
+- Campos: `id` (automatico), `nome_pai`, `nome_filho`
+- Uso: cadastro de pais/alunos na rota `/parents`
+
+- `EventAttendance`
+- Campos: `id` (id do evento), `nome_evento`, `presencas` (lista JSON com ids dos pais presentes)
+- Uso: registro de presencas por evento na rota `/attendances` e exibicao em `/view/<event_id>`
+
+Na rota `/attendances`, existe uma base inicial que garante um evento de teste no banco:
+
+- `id = 1`
+- `nome_evento = "Nome Teste de Evento"`
+
+### Como criar as tabelas no banco
+
+1. Gerar migracoes:
+
+```bash
+python manage.py makemigrations siteapp
+```
+
+2. Aplicar migracoes:
+
+```bash
+python manage.py migrate
+```
+
+### Exemplo de estrutura esperada em `EventAttendance`
+
+```text
+id = 3
+nome_evento = "Reuniao Bimestral"
+presencas = [1, 2, 8]
+```
+
+No exemplo acima, o evento `3` recebeu presenca dos pais com ids `1`, `2` e `8`.
+
 ## Como executar
 
 1. Entre na sua branch:
@@ -51,6 +92,11 @@ pip install -r requirements.txt
 ```
 
 3. Aplique migrações iniciais:
+
+```bash
+python manage.py makemigrations siteapp
+python manage.py migrate
+```
 
 4. Rode o servidor:
 
