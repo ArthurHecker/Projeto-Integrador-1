@@ -8,6 +8,10 @@ ALLOWED_HOSTS = [
     "univesp.arthurhecker.shop",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://univesp.arthurhecker.shop",
+]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
