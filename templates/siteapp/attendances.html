@@ -1,0 +1,40 @@
+{% block content %}
+<h1>Attendances</h1>
+<p>Selecione o evento pelo ID (dados vindos do banco):</p>
+
+<form method="GET">
+    <label for="event_id">Evento</label><br>
+    <select id="event_id" name="event_id" required>
+        <option value="">Selecione...</option>
+        {% for evento in eventos %}
+            <option value="{{ evento.id }}">
+                ID {{ evento.id }} - {{ evento.nome_evento }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Buscar evento</button>
+</form>
+
+{% if evento_selecionado %}
+<p>Evento selecionado: ID {{ evento_selecionado.id }} - {{ evento_selecionado.nome_evento }}</p>
+{% endif %}
+
+<p>Marque os pais presentes:</p>
+
+<form>
+    <label>
+        <input type="checkbox" name="presentes" value="pai_1">
+        Pai 1
+    </label><br>
+    <label>
+        <input type="checkbox" name="presentes" value="pai_2">
+        Pai 2
+    </label><br>
+    <label>
+        <input type="checkbox" name="presentes" value="pai_3">
+        Pai 3
+    </label><br><br>
+
+    <button type="submit">Salvar presencas</button>
+</form>
+{% endblock %}
