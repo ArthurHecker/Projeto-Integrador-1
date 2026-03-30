@@ -19,3 +19,11 @@ class EventAttendance(models.Model):
 
     def __str__(self):
         return f"Evento {self.id} - {self.nome_evento}"
+
+
+class Login(models.Model):
+    login = models.CharField(max_length=120)
+    senha = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.login
