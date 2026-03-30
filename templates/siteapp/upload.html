@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mescla de Branches</title>
+    <style>
+        :root {
+            --bg: #090b10;
+            --panel: #0f121a;
+            --panel-soft: #151a24;
+            --ink: #f3f6ff;
+            --muted: #acb3c4;
+            --line: rgba(255, 147, 41, 0.34);
+            --accent: #ff8f1f;
+            --accent-2: #ff5f2f;
+            --ok: #2cc18f;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+            color: var(--ink);
+            min-height: 100vh;
+            background:
+                radial-gradient(1200px 450px at 8% -5%, rgba(255, 143, 31, 0.26), transparent 55%),
+                radial-gradient(800px 420px at 95% 0%, rgba(255, 95, 47, 0.22), transparent 54%),
+                linear-gradient(180deg, #05070b, #0a0d14 65%, #0b0e16);
+            padding: 32px 18px;
+        }
+
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .brand {
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: #ffd39d;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            background: rgba(255, 143, 31, 0.08);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 143, 31, 0.16);
+            box-shadow: 0 12px 26px rgba(255, 143, 31, 0.15);
+        }
+
+        .main-card {
+            background: linear-gradient(145deg, rgba(16, 20, 28, 0.94), rgba(9, 11, 16, 0.97));
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 26px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255, 143, 31, 0.07), transparent 70%);
+            pointer-events: none;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(28px, 4vw, 44px);
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            margin: 12px 0 0;
+            color: var(--muted);
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .grid {
+            margin-top: 22px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, var(--panel-soft), var(--panel));
+            border: 1px solid rgba(255, 143, 31, 0.28);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 22px;
+        }
+
+        .help {
+            margin: 0 0 14px;
+            color: var(--muted);
+        }
+
+        .merge-form {
+            display: grid;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #ffe7c9;
+        }
+
+        select {
+            width: 100%;
+            border: 1px solid #50402f;
+            background: #0b0d12;
+            color: #fff3df;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            color: #160d07;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 25px rgba(255, 106, 39, 0.32);
+        }
+
+        .status-box {
+            margin-top: 10px;
+            border-left: 4px solid var(--ok);
+            background: rgba(44, 193, 143, 0.12);
+            color: #d8ffef;
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .log-area {
+            margin-top: 16px;
+            background: #07090e;
+            border: 1px solid #2d3645;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .log-area h3 {
+            margin: 0 0 10px;
+            color: #ffd9aa;
+        }
+
+        .log-item {
+            border-top: 1px dashed #313b4e;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .log-item:first-of-type {
+            border-top: 0;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .meta {
+            margin: 0 0 6px;
+            color: #adb8cc;
+            font-size: 13px;
+        }
+
+        pre {
+            margin: 0;
+            padding: 10px;
+            border-radius: 10px;
+            background: #0b101a;
+            border: 1px solid #273149;
+            color: #cad9ff;
+            overflow-x: auto;
+            font-family: "JetBrains Mono", "Consolas", monospace;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .pulse {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 0 rgba(255, 143, 31, 0.6);
+            animation: pulse 2s infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 143, 31, 0.6); }
+            70% { box-shadow: 0 0 0 11px rgba(255, 143, 31, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 143, 31, 0); }
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="top-row">
+            <div class="brand"><span class="pulse"></span>Develop Merge Console</div>
+            <a class="home-btn" href="/">Voltar ao Inicio</a>
+        </div>
+
+        <section class="main-card">
+            <h1>Configuracoes de Mescla</h1>
+            <p class="subtitle">Selecione a branch do integrante para executar o fluxo automatico de atualizacao: <code>git fetch --all</code>, <code>git pull</code> e <code>git merge --no-edit &lt;branch&gt;</code>.</p>
+
+            <div class="grid">
+                <div class="card">
+                    <h2>Mesclar Branch</h2>
+                    <p class="help">Escolha quem deseja integrar no ambiente <strong>develop</strong>.</p>
+
+                    <form method="POST" class="merge-form">
+                        {% csrf_token %}
+                        <label for="branch">Branch da pessoa</label>
+                        <select id="branch" name="branch" required>
+                            <option value="">Selecione...</option>
+                            {% for branch in branches %}
+                                <option value="{{ branch }}" {% if branch == selected_branch %}selected{% endif %}>
+                                    {{ branch|title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn" type="submit">Mesclar Agora</button>
+                    </form>
+
+                    {% if status %}
+                        <div id="status-box" class="status-box" data-restart-pending="{% if restart_pending %}1{% else %}0{% endif %}" data-instance-id="{{ server_instance_id }}">{{ status }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="card">
+                    <h2>Integrantes Disponiveis</h2>
+                    <p class="help">Branches permitidas por seguranca nesta rota:</p>
+                    <pre>firmo
+fabio
+emmanuel
+arthur</pre>
+                </div>
+            </div>
+
+            <section class="log-area">
+                <h3>Registro de Operacoes</h3>
+                {% if logs %}
+                    {% for log in logs %}
+                        <article class="log-item">
+                            <p class="meta"><strong>Comando:</strong> {{ log.command }} | <strong>Codigo:</strong> {{ log.returncode }}</p>
+                            <p class="meta"><strong>Saida:</strong></p>
+                            <pre>{{ log.stdout|default:"(sem saida)" }}</pre>
+                            <p class="meta"><strong>Erros:</strong></p>
+                            <pre>{{ log.stderr|default:"(sem erros)" }}</pre>
+                        </article>
+                    {% endfor %}
+                {% else %}
+                    <p class="meta">Aguardando a primeira mescla...</p>
+                {% endif %}
+            </section>
+        </section>
+    </div>
+</body>
+<script>
+    (function () {
+        var statusBox = document.getElementById("status-box");
+        if (!statusBox) {
+            return;
+        }
+
+        var pendingRestart = statusBox.dataset.restartPending === "1";
+        if (!pendingRestart) {
+            return;
+        }
+
+        var originalInstanceId = statusBox.dataset.instanceId || "";
+        var startedAt = Date.now();
+        var attempts = 0;
+        var maxAttempts = 90;
+
+        function markSuccess(newInstanceId) {
+            statusBox.textContent = "Servidor reiniciado com sucesso. Alteracoes aplicadas.";
+            statusBox.dataset.restartPending = "0";
+            if (newInstanceId) {
+                statusBox.dataset.instanceId = newInstanceId;
+            }
+            statusBox.style.borderLeftColor = "#2cc18f";
+            statusBox.style.background = "rgba(44, 193, 143, 0.2)";
+            statusBox.style.color = "#eafff6";
+            clearInterval(intervalId);
+        }
+
+        function markTimeout() {
+            statusBox.textContent = "Nao foi possivel confirmar o reinicio automatico, mas os comandos de mescla foram executados. Atualize a pagina para verificar o status final.";
+            statusBox.dataset.restartPending = "0";
+            statusBox.style.borderLeftColor = "#ffb347";
+            statusBox.style.background = "rgba(255, 179, 71, 0.16)";
+            statusBox.style.color = "#fff0da";
+        }
+
+        function checkServerBack() {
+            attempts += 1;
+
+            fetch("/upload/health/", {
+                method: "GET",
+                cache: "no-store",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error("Health check falhou");
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.ok && data.instance_id && data.instance_id !== originalInstanceId) {
+                        markSuccess(data.instance_id);
+                        return;
+                    }
+
+                    // Fallback: se o servidor segue respondendo apos alguns segundos,
+                    // considera reinicio concluido para nao ficar preso na mensagem.
+                    if (data.ok && Date.now() - startedAt > 4500) {
+                        markSuccess(data.instance_id || "");
+                    }
+                })
+                .catch(function () {
+                    // Ignora falhas pontuais durante o ciclo de reinicio e continua tentando.
+                });
+
+            if (attempts >= maxAttempts) {
+                clearInterval(intervalId);
+                markTimeout();
+            }
+        }
+
+        var intervalId = setInterval(checkServerBack, 1000);
+        checkServerBack();
+    })();
+</script>
+</html>
