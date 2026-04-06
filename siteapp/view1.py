@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from .models import Pai
 
 
 def login_view(request):
@@ -12,3 +13,7 @@ def logout_view(request):
 
 def register(request):
     return render(request, "siteapp/register.html")
+
+def parents_list(request):
+    pais = Pai.objects.all()
+    return render(request, "siteapp/parents_list.html", {"pais": pais})
