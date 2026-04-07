@@ -1,17 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Criar Conta - WebCEI{% endblock %}
 
 {% block content %}
-<h1>Registro</h1>
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-6 col-lg-5">
+        
+        <div class="text-center mb-4">
+            <h1 class="display-6 fw-bold text-primary">
+                <i class="bi bi-person-plus-fill"></i> WebCEI
+            </h1>
+            <p class="text-muted">Cadastro de Novo Usuário Pedagógico</p>
+        </div>
 
-<form>
-    <label for="username">Nome</label><br>
-    <input id="username" type="text" name="username" placeholder="Digite seu nome" required><br><br>
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-4 p-md-5">
+                <h2 class="h5 fw-bold mb-4 text-center">Crie sua conta</h2>
 
-    <label for="password1">Senha</label><br>
-    <input id="password1" type="password" name="password1" placeholder="Digite sua senha" required><br><br>
+                <form id="registerForm" method="POST" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-medium">Nome de Usuário</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                            <input id="username" type="text" name="username" class="form-control border-start-0 ps-0" placeholder="Ex: maria.pedagoga" required>
+                        </div>
+                    </div>
 
-    <label for="password2">Confirmar senha</label><br>
-    <input id="password2" type="password" name="password2" placeholder="Digite novamente" required><br><br>
+                    <div class="mb-3">
+                        <label for="password1" class="form-label fw-medium">Senha</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
+                            <input id="password1" type="password" name="password1" class="form-control border-start-0 ps-0" placeholder="Mínimo 6 caracteres" required>
+                        </div>
+                    </div>
 
-    <button type="submit">Registrar</button>
-</form>
+                    <div class="mb-4">
+                        <label for="password2" class="form-label fw-medium">Confirmar Senha</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-shield-check"></i></span>
+                            <input id="password2" type="password" name="password2" class="form-control border-start-0 ps-0" placeholder="Digite novamente" required>
+                        </div>
+                        <div id="passwordError" class="invalid-feedback">
+                            As senhas não coincidem.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 py-2 fw-bold shadow-sm" id="btnRegister">
+                        Finalizar Registro
+                    </button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="small text-muted">Já tem uma conta? <a href="{% url 'login' %}" class="text-primary text-decoration-none fw-bold">Faça login</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-link btn-sm text-muted text-decoration-none">
+                <i class="bi bi-arrow-left"></i> Voltar para o início
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Estilos específicos para Registro */
+    .login-page {
+        background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    }
+
+    .card {
+        border-radius: 20px;
+        border-top: 5px solid #198754; /* Verde sucesso para diferenciar do login */
+    }
+
+    .form-control:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15);
+    }
+
+    .input-group-text {
+        border-radius: 0.75rem 0 0 0.75rem !important;
+        color: #6c757d;
+    }
+
+    .form-control {
+        border-radius: 0 0.75rem 0.75rem 0 !important;
+    }
+
+    .btn-success {
+        background-color: #198754;
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #157347;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('registerForm');
+        const p1 = document.getElementById('password1');
+        const p2 = document.getElementById('password2');
+        const errorDiv = document.getElementById('passwordError');
+        const btn = document.getElementById('btnRegister');
+
+        form.addEventListener('submit', function(e) {
+            // Verifica se as senhas batem antes de enviar
+            if (p1.value !== p2.value) {
+                e.preventDefault();
+                p2.classList.add('is-invalid');
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            } else {
+                btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Criando conta...`;
+                btn.classList.add('disabled');
+            }
+            form.classList.add('was-validated');
+        });
+
+        // Remove o erro enquanto o usuário digita
+        p2.addEventListener('input', () => {
+            if (p1.value === p2.value) {
+                p2.classList.remove('is-invalid');
+                p2.classList.add('is-valid');
+                errorDiv.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}

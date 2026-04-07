@@ -1,13 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Login - WebCEI{% endblock %}
+
 {% block content %}
-<h1>Login</h1>
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                
+                <div class="text-center mb-4">
+                    <div class="icon-shape bg-primary-subtle text-primary rounded-circle mb-3 d-inline-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+                        <i class="bi bi-shield-lock-fill fs-2"></i>
+                    </div>
+                    <h2 class="h4 fw-bold">Bem-vindo ao WebCEI</h2>
+                    <p class="text-muted small">Acesse sua conta pedagógica</p>
+                </div>
 
-<form>
-    <label for="username">Nome</label><br>
-    <input id="username" type="text" name="username" placeholder="Digite seu nome" required><br><br>
+                <form id="loginForm" method="POST" novalidate>
+                    {% csrf_token %} <div class="mb-3">
+                        <label for="username" class="form-label fw-medium">Usuário ou Nome</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted">
+                                <i class="bi bi-person"></i>
+                            </span>
+                            <input id="username" 
+                                   type="text" 
+                                   name="username" 
+                                   class="form-control border-start-0 ps-0" 
+                                   placeholder="Seu usuário" 
+                                   required>
+                        </div>
+                    </div>
 
-    <label for="password">Senha</label><br>
-    <input id="password" type="password" name="password" placeholder="Digite sua senha" required><br><br>
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-medium">Senha</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted">
+                                <i class="bi bi-lock"></i>
+                            </span>
+                            <input id="password" 
+                                   type="password" 
+                                   name="password" 
+                                   class="form-control border-start-0 ps-0" 
+                                   placeholder="Sua senha secreta" 
+                                   required>
+                        </div>
+                    </div>
 
-    <button type="submit">Entrar</button>
-</form>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg py-2 fw-bold" id="btnLogin">
+                            Entrar no Sistema
+                        </button>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="#" class="text-decoration-none small text-muted">Esqueceu sua senha?</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        
+        <div class="text-center mt-4 text-muted small">
+            <p>Acesso restrito à diretoria e equipe pedagógica.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Estilos específicos para a tela de Login */
+    .card {
+        border-radius: 1.25rem;
+        transition: transform 0.3s ease;
+    }
+
+    .form-control {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        background-color: #fcfcfc;
+    }
+
+    .form-control:focus {
+        background-color: #fff;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        border-color: #0d6efd;
+    }
+
+    .input-group-text {
+        border-radius: 0.5rem 0 0 0.5rem !important;
+    }
+
+    .form-control {
+        border-radius: 0 0.5rem 0.5rem 0 !important;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(45deg, #1a252f, #2980b9);
+        transform: translateY(-2px);
+    }
+
+    /* Animação de entrada suave */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const btn = document.getElementById('btnLogin');
+
+        form.addEventListener('submit', function(event) {
+            // Validação visual simples do Bootstrap
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                // Feedback de carregamento ao clicar
+                btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Autenticando...`;
+                btn.classList.add('disabled');
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+</script>
 {% endblock %}
