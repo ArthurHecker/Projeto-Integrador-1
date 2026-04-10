@@ -13,7 +13,7 @@ def logout_view(request):
 
 def register(request):
     return render(request, "siteapp/register.html")
-
+#adicionando a lista de pais para que seja possivel a vizualização
 def parents_list(request):
     pais = Pai.objects.all()
     return render(request, "siteapp/parents_list.html", {"pais": pais})
