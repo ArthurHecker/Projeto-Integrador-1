@@ -79,7 +79,9 @@
 
                             <!-- Descrição evento -->
                             <div>
-                                <h6 class="mb-1 fw-semibold">{{ evento.nome }}</h6>
+                                <h6 class="mb-1 fw-semibold">
+                                    <a href="{% url 'view_event' evento.id %}" class="text-decoration-none">{{ evento.nome }}</a>
+                                </h6>
                                 <small class="text-muted">
                                     <i class="bi bi-calendar"></i> {{ evento.data }}
                                 </small>
@@ -120,6 +122,4 @@
 
         </div>
     </div>
-
-</div>
 {% endblock %}

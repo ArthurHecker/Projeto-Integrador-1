@@ -8,12 +8,14 @@ ALLOWED_HOSTS = [
     "univesp.arthurhecker.shop",
     "univesp.arthurhecker.space",
     "localhost",
+    "127.0.0.1",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://univesp.arthurhecker.shop",
     "https://univesp.arthurhecker.space",
-    "http://localhost:3000",
+    "http://localhost:8050",
+    "http://127.0.0.1:8050",
 ]
 
 INSTALLED_APPS = [
@@ -83,5 +85,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

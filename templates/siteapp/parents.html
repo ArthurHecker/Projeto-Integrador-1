@@ -1,13 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Pais - WebCEI{% endblock %}
+
 {% block content %}
-<h1>Cadastro de Pais</h1>
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h1 class="h5 fw-bold mb-3">
+                    {% if edit_parent %}Editar Cadastro{% else %}Cadastro de Pais{% endif %}
+                </h1>
 
-<form>
-    <label for="parent_name">Nome do Pai</label><br>
-    <input id="parent_name" type="text" name="parent_name" placeholder="Nome do pai" required><br><br>
+                {% if status %}
+                    <div class="alert alert-success py-2">{{ status }}</div>
+                {% endif %}
 
-    <label for="child_name">Nome do Filho</label><br>
-    <input id="child_name" type="text" name="child_name" placeholder="Nome do filho" required><br><br>
+                {% if error %}
+                    <div class="alert alert-danger py-2">{{ error }}</div>
+                {% endif %}
 
-    <button type="submit">Cadastrar</button>
-</form>
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="{% if edit_parent %}update{% else %}create{% endif %}">
+                    {% if edit_parent %}
+                        <input type="hidden" name="parent_id" value="{{ edit_parent.id }}">
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="parent_name" class="form-label">Nome do Pai</label>
+                        <input id="parent_name" type="text" name="parent_name" class="form-control" value="{% if edit_parent %}{{ edit_parent.nome_pai }}{% endif %}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="child_name" class="form-label">Nome do Filho</label>
+                        <input id="child_name" type="text" name="child_name" class="form-control" value="{% if edit_parent %}{{ edit_parent.nome_filho }}{% endif %}" required>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            {% if edit_parent %}Salvar Edicao{% else %}Cadastrar{% endif %}
+                        </button>
+                        {% if edit_parent %}
+                            <a href="{% url 'parents' %}" class="btn btn-outline-secondary">Cancelar</a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h2 class="h5 fw-bold mb-3">Pais Cadastrados (ordem alfabetica)</h2>
+
+                {% if parents_list %}
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Pai</th>
+                                    <th>Filho</th>
+                                    <th class="text-end">Acoes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for parent in parents_list %}
+                                    <tr>
+                                        <td>{{ parent.nome_pai }}</td>
+                                        <td>{{ parent.nome_filho }}</td>
+                                        <td class="text-end">
+                                            <a href="{% url 'parents' %}?edit={{ parent.id }}" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                            <form method="POST" class="d-inline">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="parent_id" value="{{ parent.id }}">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja remover este cadastro?');">Remover</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">Nenhum pai cadastrado ate o momento.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

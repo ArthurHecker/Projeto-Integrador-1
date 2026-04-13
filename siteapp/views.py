@@ -3,6 +3,7 @@ import threading
 import time
 from pathlib import Path
 
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import JsonResponse
 from django.http import HttpResponseForbidden
@@ -12,15 +13,23 @@ from django.utils import autoreload
 from .view1 import login_view, logout_view, register
 from .view2 import attendances, parents
 from .view3 import events, view_event, edit_event, delete_event
+from .models import EventAttendance
 
 
 SERVER_INSTANCE_ID = str(time.time_ns())
 
 
+@login_required
 def home(request):
-    return render(request, "siteapp/home.html")
+    events_db = EventAttendance.objects.order_by("-data_evento", "-id")[:6]
+    home_events = [
+        {"id": evento.id, "nome": evento.nome_evento, "data": evento.data_evento}
+        for evento in events_db
+    ]
+    return render(request, "siteapp/home.html", {"events": home_events})
 
 
+@login_required
 def upload(request):
     if not settings.DEBUG:
         return HttpResponseForbidden("Rota disponivel apenas no ambiente de desenvolvimento.")
@@ -68,7 +77,7 @@ def upload(request):
                     "stdout": completed.stdout.strip(),
                     "stderr": completed.stderr.strip(),
                 }
-            )
+            )   
 
             if completed.returncode != 0:
                 success = False
@@ -94,6 +103,7 @@ def upload(request):
     return render(request, "siteapp/upload.html", contexto)
 
 
+@login_required
 def upload_health(request):
     if not settings.DEBUG:
         return HttpResponseForbidden("Rota disponivel apenas no ambiente de desenvolvimento.")

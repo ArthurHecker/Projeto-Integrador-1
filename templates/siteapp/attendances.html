@@ -1,40 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Presencas - WebCEI{% endblock %}
+
 {% block content %}
-<h1>Attendances</h1>
-<p>Selecione o evento pelo ID (dados vindos do banco):</p>
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h1 class="h5 fw-bold mb-3">Selecionar Evento</h1>
 
-<form method="GET">
-    <label for="event_id">Evento</label><br>
-    <select id="event_id" name="event_id" required>
-        <option value="">Selecione...</option>
-        {% for evento in eventos %}
-            <option value="{{ evento.id }}">
-                ID {{ evento.id }} - {{ evento.nome_evento }}
-            </option>
-        {% endfor %}
-    </select>
-    <button type="submit">Buscar evento</button>
-</form>
+                {% if error %}
+                    <div class="alert alert-danger py-2">{{ error }}</div>
+                {% endif %}
 
-{% if evento_selecionado %}
-<p>Evento selecionado: ID {{ evento_selecionado.id }} - {{ evento_selecionado.nome_evento }}</p>
-{% endif %}
+                {% if status %}
+                    <div class="alert alert-success py-2">{{ status }}</div>
+                {% endif %}
 
-<p>Marque os pais presentes:</p>
+                <form method="GET" class="d-grid gap-3">
+                    <div>
+                        <label for="event_id" class="form-label">Evento</label>
+                        <select id="event_id" name="event_id" class="form-select" required>
+                            <option value="">Selecione...</option>
+                            {% for evento in eventos %}
+                                <option value="{{ evento.id }}" {% if evento_selecionado and evento.id == evento_selecionado.id %}selected{% endif %}>
+                                    ID {{ evento.id }} - {{ evento.nome_evento }} ({{ evento.data_evento }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar evento</button>
+                </form>
 
-<form>
-    <label>
-        <input type="checkbox" name="presentes" value="pai_1">
-        Pai 1
-    </label><br>
-    <label>
-        <input type="checkbox" name="presentes" value="pai_2">
-        Pai 2
-    </label><br>
-    <label>
-        <input type="checkbox" name="presentes" value="pai_3">
-        Pai 3
-    </label><br><br>
+                {% if not eventos %}
+                    <p class="small text-muted mt-3 mb-0">Nenhum evento cadastrado. Crie um evento primeiro.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
-    <button type="submit">Salvar presencas</button>
-</form>
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h2 class="h5 fw-bold mb-3">Marcar Presencas</h2>
+
+                {% if evento_selecionado %}
+                    <p class="text-muted">
+                        Evento selecionado: <strong>{{ evento_selecionado.nome_evento }}</strong>
+                        em {{ evento_selecionado.data_evento }}
+                    </p>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value="{{ evento_selecionado.id }}">
+
+                        <div class="list-group mb-3">
+                            {% for parent in parents_list %}
+                                <label class="list-group-item d-flex align-items-center gap-2">
+                                    <input class="form-check-input mt-0" type="checkbox" name="presentes" value="{{ parent.id }}" {% if parent.id in presentes_ids %}checked{% endif %}>
+                                    <span>
+                                        {{ parent.nome_pai }}
+                                        <small class="text-muted">(Filho: {{ parent.nome_filho }})</small>
+                                    </span>
+                                </label>
+                            {% empty %}
+                                <p class="text-muted mb-0">Nao ha pais cadastrados para marcar presenca.</p>
+                            {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Salvar presencas</button>
+                    </form>
+                {% else %}
+                    <p class="text-muted mb-0">Selecione um evento para habilitar a marcacao de presencas.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
