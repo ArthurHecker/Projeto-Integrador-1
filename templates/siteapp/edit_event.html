@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Evento{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+
+                <h4 class="fw-bold text-center mb-4">
+                    Editar Evento
+                </h4>
+
+                <form method="POST">
+                    {% csrf_token %}
+                
+                    <div class="mb-3">
+                        <label class="form-label">Nome</label>
+                        <input type="text" name="nome" class="form-control"
+                               value="{{ evento.nome }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Data</label>
+                        <input type="date" name="data" class="form-control"
+                               value="{{ evento.data }}" required>
+                    </div>
+
+                    <button class="btn btn-primary w-100">
+                        Salvar alterações
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
