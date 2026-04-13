@@ -6,10 +6,14 @@ SECRET_KEY = "troque-esta-chave-em-producao"
 DEBUG = True
 ALLOWED_HOSTS = [
     "univesp.arthurhecker.shop",
+    "univesp.arthurhecker.space",
+    "localhost",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://univesp.arthurhecker.shop",
+    "https://univesp.arthurhecker.space",
+    "http://localhost:3000",
 ]
 
 INSTALLED_APPS = [
