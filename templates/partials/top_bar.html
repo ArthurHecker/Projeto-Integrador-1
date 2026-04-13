@@ -1,9 +1,45 @@
-<header class="top-bar">
-    <nav>
-        <a href="/">Inicio</a>
-        <a href="/events/">Eventos</a>
-        <a href="/parents/">Parents</a>
-        <a href="/attendances/">Attendances</a>
-        <a href="/upload/">Mescla</a>
+<header class="top-bar shadow-sm bg-white">
+    <nav class="navbar navbar-expand-lg navbar-light container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <i class="bi bi-book-half me-2 text-primary"></i>
+            <span class="text-dark">Web</span><span class="text-primary">CEI</span>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        {% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'register' %}
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="/"><i class="bi bi-house-door me-1"></i> Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="/events/"><i class="bi bi-calendar-event me-1"></i> Eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="/parents/"><i class="bi bi-people me-1"></i> Pais</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="/attendances/"><i class="bi bi-check2-square me-1"></i> Presença</a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
     </nav>
 </header>
+
+<style>
+    .top-bar {
+        border-bottom: 2px solid #eee;
+    }
+    .nav-link:hover {
+        color: var(--accent-color) !important;
+        background-color: #f0f7ff;
+        border-radius: 8px;
+    }
+    .navbar-brand {
+        font-size: 1.4rem;
+        letter-spacing: -0.5px;
+    }
+</style>
