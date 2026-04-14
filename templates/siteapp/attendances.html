@@ -1,40 +1,79 @@
+{% extends "base.html" %}
+
 {% block content %}
-<h1>Attendances</h1>
-<p>Selecione o evento pelo ID (dados vindos do banco):</p>
+<div class="container mt-5">
 
-<form method="GET">
-    <label for="event_id">Evento</label><br>
-    <select id="event_id" name="event_id" required>
-        <option value="">Selecione...</option>
-        {% for evento in eventos %}
-            <option value="{{ evento.id }}">
-                ID {{ evento.id }} - {{ evento.nome_evento }}
-            </option>
-        {% endfor %}
-    </select>
-    <button type="submit">Buscar evento</button>
-</form>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
 
-{% if evento_selecionado %}
-<p>Evento selecionado: ID {{ evento_selecionado.id }} - {{ evento_selecionado.nome_evento }}</p>
-{% endif %}
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
 
-<p>Marque os pais presentes:</p>
+                    <!-- Cabeçalho -->
+                    <div class="text-center mb-4">
+                        <div class="icon-shape bg-primary-subtle text-primary rounded-circle mb-3 d-inline-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+                            <i class="bi bi-check2-square fs-2"></i>
+                        </div>
+                        <h2 class="fw-bold">Controle de Presença</h2>
+                        <p class="text-muted small">Selecione o evento e registre presenças</p>
+                    </div>
 
-<form>
-    <label>
-        <input type="checkbox" name="presentes" value="pai_1">
-        Pai 1
-    </label><br>
-    <label>
-        <input type="checkbox" name="presentes" value="pai_2">
-        Pai 2
-    </label><br>
-    <label>
-        <input type="checkbox" name="presentes" value="pai_3">
-        Pai 3
-    </label><br><br>
+                    <form method="POST">
+                        {% csrf_token %}
 
-    <button type="submit">Salvar presencas</button>
-</form>
+                        <!-- Seleção de evento -->
+                        <div class="mb-4">
+                            <label class="form-label fw-medium">Evento</label>
+                            <select class="form-select" name="event_id" required>
+                                <option value="">Selecione...</option>
+                                {% for evento in eventos %}
+                                    <option value="{{ evento.id }}">
+                                        {{ evento.nome_evento }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        {% if evento_selecionado %}
+                            <div class="alert alert-info">
+                                Evento: <strong>{{ evento_selecionado.nome_evento }}</strong>
+                            </div>
+                        {% endif %}
+
+                        <!-- Presenças -->
+                        <div class="mb-4">
+                            <label class="form-label fw-medium">Pais presentes</label>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="presentes" value="pai_1">
+                                <label class="form-check-label">Pai 1</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="presentes" value="pai_2">
+                                <label class="form-check-label">Pai 2</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="presentes" value="pai_3">
+                                <label class="form-check-label">Pai 3</label>
+                            </div>
+                        </div>
+
+                        <!-- Botão -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary fw-bold">
+                                Salvar Presenças
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 {% endblock %}
