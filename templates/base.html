@@ -4,23 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Meu Site Django{% endblock %}</title>
+    <!-- NOVO (Fabio): le o tamanho de fonte salvo no localStorage e aplica
+         antes da pagina aparecer, para ela nao abrir pequena e depois "pular" -->
+    <script>
+        // Aplica o tamanho salvo antes da pagina aparecer, para nao "piscar"
+        try {
+            var tamanhoSalvo = localStorage.getItem("tamanhoFonte");
+            if (tamanhoSalvo) {
+                document.documentElement.style.fontSize = tamanhoSalvo + "%";
+            }
+        } catch (e) {}
+    </script>
     <style>
+        /* ALTERADO (Fabio): medidas trocadas de px para rem em todo o CSS.
+           1rem = tamanho da fonte do <html> (16px por padrao), entao quando os
+           botoes A+/A- mudam a fonte do <html>, tudo cresce junto sem quebrar.
+           Conversao: 24px = 1.5rem, 12px = 0.75rem, 32px = 2rem,
+           14px = 0.875rem, 900px = 56.25rem. Bordas de 1px continuam em px. */
         body {
             font-family: sans-serif;
-            max-width: 900px;
+            max-width: 56.25rem;
             margin: 0 auto;
-            padding: 24px;
+            padding: 1.5rem;
             line-height: 1.6;
         }
 
+        /* ALTERADO (Fabio): nav virou flex para deixar links a esquerda e botoes
+           de fonte a direita. flex-wrap faz os botoes descerem de linha em telas
+           pequenas ou com fonte grande, em vez de vazar para fora da tela */
         .top-bar nav {
-            margin-bottom: 24px;
-            padding-bottom: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
             border-bottom: 1px solid #ddd;
         }
 
         .top-bar nav a {
-            margin-right: 12px;
+            margin-right: 0.75rem;
             text-decoration: none;
             color: #0056b3;
         }
@@ -29,12 +53,40 @@
             text-decoration: underline;
         }
 
+        /* NOVO (Fabio): estilo dos botoes A-, A e A+ da barra de cima.
+           O botao fica apagado (disabled) quando chega no limite */
+        .font-controls {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .font-controls button {
+            font-size: 0.875rem;
+            min-width: 2.5rem;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #0056b3;
+            border-radius: 0.25rem;
+            background: #fff;
+            color: #0056b3;
+            cursor: pointer;
+        }
+
+        .font-controls button:hover {
+            background: #0056b3;
+            color: #fff;
+        }
+
+        .font-controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
         .footer {
-            margin-top: 32px;
-            padding-top: 12px;
+            margin-top: 2rem;
+            padding-top: 0.75rem;
             border-top: 1px solid #ddd;
             color: #555;
-            font-size: 14px;
+            font-size: 0.875rem;
         }
     </style>
 </head>
@@ -44,5 +96,40 @@
     {% block content %}{% endblock %}
 
     {% include "partials/footer.html" %}
+
+    <!-- NOVO (Fabio): logica dos botoes de fonte. Cada clique muda o tamanho
+         da fonte do <html> em 10% (entre 80% e 150%) e salva no localStorage,
+         para o tamanho escolhido continuar ao trocar de pagina ou recarregar -->
+    <script>
+        (function () {
+            var PADRAO = 100;  // 100% = 16px
+            var PASSO = 10;
+            var MINIMO = 80;
+            var MAXIMO = 150;
+
+            var html = document.documentElement;
+            var botaoMenos = document.getElementById("font-decrease");
+            var botaoNormal = document.getElementById("font-reset");
+            var botaoMais = document.getElementById("font-increase");
+
+            var atual = parseInt(html.style.fontSize, 10) || PADRAO;
+
+            function aplicar(tamanho) {
+                atual = Math.min(MAXIMO, Math.max(MINIMO, tamanho));
+                html.style.fontSize = atual + "%";
+                botaoMenos.disabled = atual <= MINIMO;
+                botaoMais.disabled = atual >= MAXIMO;
+                try {
+                    localStorage.setItem("tamanhoFonte", atual);
+                } catch (e) {}
+            }
+
+            botaoMenos.addEventListener("click", function () { aplicar(atual - PASSO); });
+            botaoMais.addEventListener("click", function () { aplicar(atual + PASSO); });
+            botaoNormal.addEventListener("click", function () { aplicar(PADRAO); });
+
+            aplicar(atual);
+        })();
+    </script>
 </body>
 </html>

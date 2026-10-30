@@ -1,8 +1,20 @@
 <header class="top-bar">
     <nav>
-        <a href="/">Inicio</a>
-        <a href="/events/">Eventos</a>
-        <a href="/parents/">Parents</a>
-        <a href="/attendances/">Attendances</a>
+        <!-- ALTERADO (Fabio): links agrupados numa div para ficarem a esquerda,
+             separados dos botoes de fonte que ficam a direita -->
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/events/">Eventos</a>
+            <a href="/parents/">Parents</a>
+            <a href="/attendances/">Attendances</a>
+        </div>
+
+        <!-- NOVO (Fabio): botoes de acessibilidade para diminuir (A-), voltar ao
+             normal (A) e aumentar (A+) a fonte. A logica fica no script do base.html -->
+        <div class="font-controls" role="group" aria-label="Tamanho da fonte">
+            <button type="button" id="font-decrease" aria-label="Diminuir fonte">A-</button>
+            <button type="button" id="font-reset" aria-label="Voltar fonte ao normal">A</button>
+            <button type="button" id="font-increase" aria-label="Aumentar fonte">A+</button>
+        </div>
     </nav>
 </header>
