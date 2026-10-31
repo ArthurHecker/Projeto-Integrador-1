@@ -1,9 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block content %}
 <h1>Criar Evento</h1>
 
 <form method="POST">
     {% csrf_token %}
-    <input type="text" name="nome" placeholder="Nome da reunião" required>
-    <input type="date" name="data" required>
+
+    <label for="nome">Nome da reunião</label><br>
+    <input type="text" id="nome" name="nome" placeholder="Nome da reunião" required><br><br>
+    <label for="data">Data da reunião</label><br>
+    <input type="date" id="data" name="data" required><br><br>
     <button type="submit">Criar</button>
 </form>
 
@@ -12,10 +20,15 @@
 <h2>Eventos Criados</h2>
 
 {% for evento in events %}
-    <div style="border:1px solid #000; margin:10px; padding:10px;">
+    <div class="card" style="margin: 10px 0;">
         <h3>{{ evento.nome }}</h3>
         <p>{{ evento.data }}</p>
-    
-        <a href="{% url 'view_event' evento.id %}">Ver Presenças</a>
+        <a href="{% url 'view_event' evento.id %}">
+            Ver Presenças
+        </a>
     </div>
+{% empty %}
+    <p>Nenhum evento cadastrado.</p>
 {% endfor %}
+
+{% endblock %}
