@@ -12,8 +12,8 @@
 
             <div class="text-center mb-4">
                 <div class="icon-shape bg-primary-subtle text-primary rounded-circle mb-3 d-inline-flex align-items-center justify-content-center"
-                     style="width: 64px; height: 64px;">
-                    <i class="bi bi-calendar-plus fs-2"></i>
+                    >
+                    <i aria-hidden="true" class="bi bi-calendar-plus fs-2"></i>
                 </div>
 
                 <h1 class="h4 fw-bold">Criar Evento</h1>
@@ -25,12 +25,12 @@
 
                 <!--Nome Evento -->
                 <div class="mb-3">
-                    <label class="form-label fw-medium">Nome do Evento</label>
+                    <label for="nome" class="form-label fw-medium">Nome do Evento</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0 text-muted">
-                            <i class="bi bi-card-text"></i>
+                        <span class="input-group-text bg-body-tertiary border-end-0 text-muted">
+                            <i aria-hidden="true" class="bi bi-card-text"></i>
                         </span>
-                        <input type="text" name="nome" class="form-control border-start-0 ps-0" placeholder="Nome da reunião" required>
+                        <input type="text" id="nome" name="nome" class="form-control border-start-0 ps-0" placeholder="Nome da reunião" required>
                         {% if error_nome %}
                             <small class="text-danger">{{ error_nome }}</small>
                         {% endif %}
@@ -40,12 +40,12 @@
 
                 <!-- Data -->
                 <div class="mb-4">
-                    <label class="form-label fw-medium">Data</label>
+                    <label for="data" class="form-label fw-medium">Data</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0 text-muted">
-                            <i class="bi bi-calendar-event"></i>
+                        <span class="input-group-text bg-body-tertiary border-end-0 text-muted">
+                            <i aria-hidden="true" class="bi bi-calendar-event"></i>
                         </span>
-                        <input type="date" name="data" class="form-control border-start-0 ps-0" required>
+                        <input type="date" id="data" name="data" class="form-control border-start-0 ps-0" required>
                         {% if error_data %}
                             <small class="text-danger">{{ error_data }}</small>
                         {% endif %}
@@ -68,7 +68,7 @@
         <div class="card-body p-4">
 
             <h2 class="h5 fw-bold mb-4 text-center">
-                <i class="bi bi-calendar-check me-2"></i>
+                <i aria-hidden="true" class="bi bi-calendar-check me-2"></i>
                 Eventos Criados
             </h2>
 
@@ -79,11 +79,11 @@
 
                             <!-- Descrição evento -->
                             <div>
-                                <h6 class="mb-1 fw-semibold">
+                                <h3 class="h6 mb-1 fw-semibold">
                                     <a href="{% url 'view_event' evento.id %}" class="text-decoration-none">{{ evento.nome }}</a>
-                                </h6>
+                                </h3>
                                 <small class="text-muted">
-                                    <i class="bi bi-calendar"></i> {{ evento.data }}
+                                    <i aria-hidden="true" class="bi bi-calendar"></i> {{ evento.data }}
                                 </small>
                             </div>
 
@@ -92,21 +92,22 @@
 
                                 <!-- Visualiizar -->
                                 <a href="{% url 'view_event' evento.id %}" 
-                                   class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-eye"></i>
+                                   class="btn btn-outline-primary btn-sm" aria-label="Ver evento {{ evento.nome }}" title="Ver">
+                                    <i aria-hidden="true" class="bi bi-eye"></i>
                                 </a>
 
                                  <!-- Editar evento-->
                                 <a href="{% url 'edit_event' evento.id %}" 
-                                   class="btn btn-outline-secondary btn-sm">
-                                    <i class="bi bi-pencil"></i>
+                                   class="btn btn-outline-secondary btn-sm" aria-label="Editar evento {{ evento.nome }}" title="Editar">
+                                    <i aria-hidden="true" class="bi bi-pencil"></i>
                                 </a>
 
                                 <!-- Excluir evento -->
                                 <a href="{% url 'delete_event' evento.id %}" 
                                    class="btn btn-outline-danger btn-sm"
+                                   aria-label="Excluir evento {{ evento.nome }}" title="Excluir"
                                    onclick="return confirm('Tem certeza que deseja excluir este evento?');">
-                                    <i class="bi bi-trash"></i>
+                                    <i aria-hidden="true" class="bi bi-trash"></i>
                                 </a>
 
                             </div>

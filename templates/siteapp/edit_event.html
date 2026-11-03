@@ -10,26 +10,26 @@
         <div class="card shadow border-0">
             <div class="card-body p-4">
 
-                <h4 class="fw-bold text-center mb-4">
+                <h1 class="h4 fw-bold text-center mb-4">
                     Editar Evento
-                </h4>
+                </h1>
 
                 <form method="POST">
                     {% csrf_token %}
                 
                     <div class="mb-3">
-                        <label class="form-label">Nome</label>
-                        <input type="text" name="nome" class="form-control"
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" id="nome" name="nome" class="form-control"
                                value="{{ evento.nome }}" required>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Data</label>
-                        <input type="date" name="data" class="form-control"
+                        <label for="data" class="form-label">Data</label>
+                        <input type="date" id="data" name="data" class="form-control"
                                value="{{ evento.data }}" required>
                     </div>
 
-                    <button class="btn btn-primary w-100">
+                    <button type="submit" class="btn btn-primary w-100">
                         Salvar alterações
                     </button>
                 </form>

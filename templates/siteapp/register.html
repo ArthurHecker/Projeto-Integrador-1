@@ -8,7 +8,7 @@
         
         <div class="text-center mb-4">
             <h1 class="display-6 fw-bold text-primary">
-                <i class="bi bi-person-plus-fill"></i> WebCEI
+                <i aria-hidden="true" class="bi bi-person-plus-fill"></i> WebCEI
             </h1>
             <p class="text-muted">Cadastro de Novo Usuário Pedagógico</p>
         </div>
@@ -29,7 +29,7 @@
                     <div class="mb-3">
                         <label for="username" class="form-label fw-medium">Nome de Usuário</label>
                         <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                            <span class="input-group-text bg-body-tertiary border-end-0"><i aria-hidden="true" class="bi bi-person"></i></span>
                             <input id="username" type="text" name="username" class="form-control border-start-0 ps-0" placeholder="Ex: maria.pedagoga" value="{{ request.POST.username|default:'' }}" required>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <label for="password1" class="form-label fw-medium">Senha</label>
                         <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
+                            <span class="input-group-text bg-body-tertiary border-end-0"><i aria-hidden="true" class="bi bi-lock"></i></span>
                             <input id="password1" type="password" name="password1" class="form-control border-start-0 ps-0" placeholder="Mínimo 6 caracteres" required>
                         </div>
                     </div>
@@ -45,10 +45,10 @@
                     <div class="mb-4">
                         <label for="password2" class="form-label fw-medium">Confirmar Senha</label>
                         <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-shield-check"></i></span>
-                            <input id="password2" type="password" name="password2" class="form-control border-start-0 ps-0" placeholder="Digite novamente" required>
+                            <span class="input-group-text bg-body-tertiary border-end-0"><i aria-hidden="true" class="bi bi-shield-check"></i></span>
+                            <input id="password2" type="password" name="password2" class="form-control border-start-0 ps-0" placeholder="Digite novamente" aria-describedby="passwordError" required>
                         </div>
-                        <div id="passwordError" class="invalid-feedback">
+                        <div id="passwordError" class="invalid-feedback" role="alert">
                             As senhas não coincidem.
                         </div>
                     </div>
@@ -66,7 +66,7 @@
 
         <div class="text-center mt-4">
             <a href="/" class="btn btn-link btn-sm text-muted text-decoration-none">
-                <i class="bi bi-arrow-left"></i> Voltar para o início
+                <i aria-hidden="true" class="bi bi-arrow-left"></i> Voltar para o início
             </a>
         </div>
     </div>
@@ -79,8 +79,8 @@
     }
 
     .card {
-        border-radius: 20px;
-        border-top: 5px solid #198754; /* Verde sucesso para diferenciar do login */
+        border-radius: 1.25rem;
+        border-top: 0.3rem solid #198754; /* Verde sucesso para diferenciar do login */
     }
 
     .form-control:focus {
@@ -90,7 +90,7 @@
 
     .input-group-text {
         border-radius: 0.75rem 0 0 0.75rem !important;
-        color: #6c757d;
+        color: var(--bs-secondary-color);
     }
 
     .form-control {
@@ -105,8 +105,8 @@
 
     .btn-success:hover {
         background-color: #157347;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
+        transform: translateY(-0.0625rem);
+        box-shadow: 0 0.25rem 0.75rem rgba(25, 135, 84, 0.2);
     }
 </style>
 

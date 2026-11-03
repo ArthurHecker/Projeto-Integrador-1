@@ -15,7 +15,7 @@
 	<div class="col-md-6 col-xl-3">
 		<a href="{% url 'events' %}" class="card text-decoration-none h-100">
 			<div class="card-body">
-				<h2 class="h6 fw-bold mb-1 text-dark">Eventos</h2>
+				<h2 class="h6 fw-bold mb-1">Eventos</h2>
 				<p class="text-muted mb-0">Cadastrar e editar reunioes.</p>
 			</div>
 		</a>
@@ -23,7 +23,7 @@
 	<div class="col-md-6 col-xl-3">
 		<a href="{% url 'parents' %}" class="card text-decoration-none h-100">
 			<div class="card-body">
-				<h2 class="h6 fw-bold mb-1 text-dark">Pais</h2>
+				<h2 class="h6 fw-bold mb-1">Pais</h2>
 				<p class="text-muted mb-0">Cadastrar, editar e remover pais.</p>
 			</div>
 		</a>
@@ -31,7 +31,7 @@
 	<div class="col-md-6 col-xl-3">
 		<a href="{% url 'attendances' %}" class="card text-decoration-none h-100">
 			<div class="card-body">
-				<h2 class="h6 fw-bold mb-1 text-dark">Presencas</h2>
+				<h2 class="h6 fw-bold mb-1">Presencas</h2>
 				<p class="text-muted mb-0">Marcar e salvar presencas por evento.</p>
 			</div>
 		</a>
@@ -39,7 +39,7 @@
 	<div class="col-md-6 col-xl-3">
 		<a href="{% url 'logout' %}" class="card text-decoration-none h-100">
 			<div class="card-body">
-				<h2 class="h6 fw-bold mb-1 text-dark">Logout</h2>
+				<h2 class="h6 fw-bold mb-1">Logout</h2>
 				<p class="text-muted mb-0">Encerrar sessao atual.</p>
 			</div>
 		</a>
@@ -56,7 +56,7 @@
 					<div class="col-md-6 col-xl-4">
 						<a href="{% url 'view_event' evento.id %}" class="card text-decoration-none h-100">
 							<div class="card-body">
-								<h3 class="h6 text-dark mb-1">{{ evento.nome }}</h3>
+								<h3 class="h6 mb-1">{{ evento.nome }}</h3>
 								<p class="text-muted mb-0">{{ evento.data }}</p>
 							</div>
 						</a>

@@ -1,48 +1,72 @@
-<header class="top-bar shadow-sm bg-white">
-    <nav class="navbar navbar-expand-lg navbar-light container">
+<header class="top-bar shadow-sm surface">
+    <nav class="navbar navbar-expand-lg container" aria-label="Navegação principal">
         <a class="navbar-brand d-flex align-items-center" href="/">
-            <i class="bi bi-book-half me-2 text-primary"></i>
-            <span class="text-dark">Web</span><span class="text-primary">CEI</span>
+            <i class="bi bi-book-half me-2 text-primary" aria-hidden="true"></i>
+            <span class="brand-strong">Web</span><span class="text-primary">CEI</span>
         </a>
-        
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        {% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'register' %}
+
         <div class="collapse navbar-collapse" id="navbarNav">
+            {% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'register' %}
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="/"><i class="bi bi-house-door me-1"></i> Início</a>
+                    <a class="nav-link px-3" href="/"><i class="bi bi-house-door me-1" aria-hidden="true"></i> Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="/events/"><i class="bi bi-calendar-event me-1"></i> Eventos</a>
+                    <a class="nav-link px-3" href="/events/"><i class="bi bi-calendar-event me-1" aria-hidden="true"></i> Eventos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="/parents/"><i class="bi bi-people me-1"></i> Pais</a>
+                    <a class="nav-link px-3" href="/parents/"><i class="bi bi-people me-1" aria-hidden="true"></i> Pais</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="/attendances/"><i class="bi bi-check2-square me-1"></i> Presença</a>
+                    <a class="nav-link px-3" href="/attendances/"><i class="bi bi-check2-square me-1" aria-hidden="true"></i> Presença</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="/logout/"><i class="bi bi-box-arrow-right me-1"></i> Sair</a>
+                    <a class="nav-link px-3" href="/logout/"><i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i> Sair</a>
                 </li>
             </ul>
+            {% endif %}
+
+            <!-- Controles de acessibilidade: aparecem em TODAS as paginas (inclusive login/registro) -->
+            <div class="a11y-controls d-flex flex-wrap align-items-center gap-2 {% if request.resolver_match.url_name == 'login' or request.resolver_match.url_name == 'register' %}ms-auto{% else %}ms-lg-3{% endif %} py-2 py-lg-0">
+
+                <!-- NOVO (Fabio): A- diminui, A volta ao normal, A+ aumenta. Logica no base.html -->
+                <div class="font-controls" role="group" aria-label="Tamanho da fonte">
+                    <button type="button" class="btn btn-outline-primary" id="font-decrease" aria-label="Diminuir fonte" title="Diminuir fonte">A-</button>
+                    <button type="button" class="btn btn-outline-primary" id="font-reset" aria-label="Voltar fonte ao normal" title="Fonte normal">A</button>
+                    <button type="button" class="btn btn-outline-primary" id="font-increase" aria-label="Aumentar fonte" title="Aumentar fonte">A+</button>
+                </div>
+
+                <!-- NOVO (Emmanuel): alterna claro -> escuro -> alto contraste. Logica no base.html -->
+                <div class="theme-controls">
+                    <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-1" id="theme-toggle" aria-label="Mudar tema">
+                        <i class="bi bi-moon-stars-fill" aria-hidden="true"></i>
+                        <span class="theme-label small">Escuro</span>
+                    </button>
+                </div>
+            </div>
         </div>
-        {% endif %}
     </nav>
 </header>
 
 <style>
     .top-bar {
-        border-bottom: 2px solid #eee;
+        border-bottom: 2px solid var(--border-color);
+    }
+    .brand-strong {
+        color: var(--text-strong);
     }
     .nav-link:hover {
         color: var(--accent-color) !important;
-        background-color: #f0f7ff;
-        border-radius: 8px;
+        background-color: var(--bg-hover);
+        border-radius: 0.5rem;
     }
     .navbar-brand {
         font-size: 1.4rem;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.03rem;
     }
 </style>
